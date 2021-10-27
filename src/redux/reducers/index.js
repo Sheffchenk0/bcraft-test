@@ -11,10 +11,10 @@ const initialState = {
     password: null,
   },
   pages: [
-    { value: 'Log In', href: '/bcraft-test/login', auth: false },
-    { value: 'Sign Up', href: '/bcraft-test/signup', auth: false },
-    { value: 'Change password', href: '/bcraft-test/change', auth: true },
-    { value: 'Log Out', href: '/bcraft-test/logout', auth: true },
+    { value: 'Log In', href: '/login', auth: false },
+    { value: 'Sign Up', href: '/signup', auth: false },
+    { value: 'Change password', href: '/change', auth: true },
+    { value: 'Log Out', href: '/logout', auth: true },
   ],
   notification: null,
   loginPageForm: [

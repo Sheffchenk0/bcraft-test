@@ -12,7 +12,6 @@ const Header = () => {
     if (el.auth === isAuth) {
       return el;
     }
-    return { ...el, href: '' };
   });
   return (
     <div className="header">
