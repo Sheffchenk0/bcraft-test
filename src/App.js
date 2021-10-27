@@ -1,16 +1,24 @@
-import React, { lazy, Suspense, useState } from 'react';
+import React, { lazy, Suspense, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router';
 import Header from './Components/Header/Header';
+import Notification from './Components/Notification/Notification';
 import './pages/InputPages.css';
-import Logoutpage from './pages/LogOut/LogOutPage';
+import { setWrong } from './redux/reducers';
 
 const LoginPage = lazy(() => import('./pages/Login/LoginPage'));
-const SignInPage = lazy(() => import('./pages/SignIn/SignInPage'));
+const SignUpPage = lazy(() => import('./pages/SignUp/SignUpPage'));
 const ChangePasswordPage = lazy(() => import('./pages/ChangePassword/ChangePasswordPage'));
-
+const Logoutpage = lazy(() => import('./pages/LogOut/LogOutPage'));
 const App = () => {
-  const [menuActive, setMenuActive] = useState(false);
-
+  const notification = useSelector((state) => state.notification);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    window.onerror = () => {
+      dispatch(setWrong());
+    };
+  }, [dispatch]);
   return (
     <>
       <div className="container">
@@ -19,12 +27,15 @@ const App = () => {
           <Suspense fallback="loading">
             <Switch>
               <Route path="/login" render={() => <LoginPage />} />
-              <Route path="/signin" render={() => <SignInPage />} />
+              <Route path="/signup" render={() => <SignUpPage />} />
               <Route path="/change" render={() => <ChangePasswordPage />} />
               <Route path="/logout" render={() => <Logoutpage />} />
               <Route path="/" render={() => <Redirect to="/login" />} />
             </Switch>
           </Suspense>
+          <Notification show={notification?.message && true} isError={notification?.isError}>
+            {notification?.message}
+          </Notification>
         </div>
       </div>
     </>

@@ -5,13 +5,16 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './redux/';
 import './App.css';
+import ErrorBoundary from './Components/ErrorBoundary/ErrorBoundary';
 
 let rerender = (store) => {
   ReactDOM.render(
     <React.StrictMode>
       <BrowserRouter>
         <Provider store={store}>
-          <App />
+          <ErrorBoundary>
+            <App />
+          </ErrorBoundary>
         </Provider>
       </BrowserRouter>
     </React.StrictMode>,

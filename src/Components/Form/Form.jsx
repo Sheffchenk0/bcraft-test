@@ -1,9 +1,8 @@
-import React, { memo, useEffect, useState, useRef } from 'react';
+import React, { memo, useEffect, useRef } from 'react';
 import Input from './Input/Input';
 import { useForm } from 'react-hook-form';
 
-const Form = ({ inputs, onUnmount, onSubmit, isAuth }) => {
-  console.log(isAuth);
+const Form = ({ inputs, onUnmount, onSubmit }) => {
   const {
     register,
     watch,

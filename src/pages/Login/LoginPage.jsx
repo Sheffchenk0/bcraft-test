@@ -14,17 +14,16 @@ const Loginpage = () => {
   const dispatch = useDispatch();
   const onUnmount = (watchAllFields) => {
     dispatch(setDefaultValue('loginPageForm', watchAllFields));
-    console.log(watchAllFields);
   };
   const onSubmit = ({ email, password }) => {
-    dispatch(login(email, password));
+    dispatch(login(email, password, 'Login succes', false));
   };
   return (
     <>
       {(isAuth && <Redirect to="/change" />) || (
         <div>
           <div className="title">Log in</div>
-          <Form isAuth={isAuth} onSubmit={onSubmit} onUnmount={onUnmount} inputs={inputs} />
+          <Form onSubmit={onSubmit} onUnmount={onUnmount} inputs={inputs} />
         </div>
       )}
     </>

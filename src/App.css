@@ -58,3 +58,13 @@ button:hover {
     margin: 0 auto;
     margin-top: 100px;
 }
+
+@media screen and (max-width: 768px) {
+    .page {
+        margin-top: 0px;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        padding: 16px;
+    }
+}

@@ -2,6 +2,7 @@ import { API } from '../../API';
 
 const SET_DEFAULT_VALUE = 'SET_DEFAULT_VALUE';
 const SET_AUTH = 'SET_AUTH';
+const SET_NOTIFICATION = 'SET_NOTIFICATION';
 
 const initialState = {
   auth: {
@@ -11,10 +12,11 @@ const initialState = {
   },
   pages: [
     { value: 'Log In', href: '/login', auth: false },
-    { value: 'Sign In', href: '/signin', auth: false },
+    { value: 'Sign Up', href: '/signup', auth: false },
     { value: 'Change password', href: '/change', auth: true },
     { value: 'Log Out', href: '/logout', auth: true },
   ],
+  notification: null,
   loginPageForm: [
     {
       id: 0,
@@ -34,6 +36,7 @@ const initialState = {
           message: 'Entered value does not match email format',
         },
       },
+      suggested: 'email',
       placeholder: 'Email...',
       name: 'email',
       label: 'E-mail',
@@ -63,7 +66,7 @@ const initialState = {
       defaultValue: '',
     },
   ],
-  signinPageForm: [
+  signupPageForm: [
     {
       id: 0,
       inputType: 'text',
@@ -205,7 +208,7 @@ const initialState = {
   ],
 };
 
-export default (state = initialState, { type, payload }) => {
+export default function reducer(state = initialState, { type, payload }) {
   switch (type) {
     case SET_DEFAULT_VALUE:
       let result = [...state[payload.name]];
@@ -221,24 +224,98 @@ export default (state = initialState, { type, payload }) => {
         },
       };
     }
+    case SET_NOTIFICATION: {
+      return {
+        ...state,
+        notification: { ...payload },
+      };
+    }
     default:
       return state;
   }
-};
+}
 
-export const setDefaultValue = (name, values) => {
+export const setDefaultValueAC = (name, values) => {
   return { type: SET_DEFAULT_VALUE, payload: { name, values } };
 };
 export const setAuth = (isAuth, email = null, password = null) => {
   return { type: SET_AUTH, payload: { email, password, isAuth } };
 };
+export const setNotification = (notification) => {
+  return { type: SET_NOTIFICATION, payload: notification };
+};
+export const setWrongAC = () => {
+  return { type: SET_NOTIFICATION, payload: { message: 'Something went wrong', isError: true } };
+};
 
-export const login = ({ email, password }) => {
+export const login = (email, password, message, isError) => {
   return (dispatch) => {
-    API.login(email, password).then((res) => {
-      if (res.data.result === 200) {
-        dispatch(setAuth(true, email, password));
-      }
-    });
+    API.login(email, password)
+      .then((res) => {
+        if (res.data.result === 200) {
+          dispatch(setAuth(true, email, password));
+          dispatch(addNotification(message, isError));
+        }
+      })
+      .catch(() => {
+        dispatch(setWrong());
+      });
+  };
+};
+
+export const changePassword = (email, newPassword, message, isError) => {
+  return (dispatch) => {
+    API.changePassword(email, newPassword)
+      .then((res) => {
+        if (res.data.result === 200) {
+          dispatch(setAuth(true, email, newPassword));
+          dispatch(addNotification(message, isError));
+        }
+      })
+      .catch(() => {
+        dispatch(setWrong());
+      });
+  };
+};
+
+export const signUp = (email, password, message, isError) => {
+  return (dispatch) => {
+    API.signup(email, password)
+      .then((res) => {
+        if (res.data.result === 200) {
+          dispatch(setAuth(true, email, password));
+          dispatch(addNotification(message, isError));
+        }
+      })
+      .catch(() => {
+        dispatch(setWrong());
+      });
+  };
+};
+
+export const setDefaultValue = (name, values) => {
+  return (dispatch) => {
+    if (Object.keys(values).length === 0) {
+      return false;
+    }
+    dispatch(setDefaultValueAC(name, values));
+  };
+};
+
+export const addNotification = (message, isError) => {
+  return (dispatch) => {
+    dispatch(setNotification({ message, isError }));
+    setTimeout(() => {
+      dispatch(setNotification(null));
+    }, 3000);
+  };
+};
+
+export const setWrong = () => {
+  return (dispatch) => {
+    dispatch(setWrongAC());
+    setTimeout(() => {
+      dispatch(setNotification(null));
+    }, 3000);
   };
 };

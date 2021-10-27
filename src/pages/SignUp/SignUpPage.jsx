@@ -3,29 +3,32 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router';
 import Form from '../../Components/Form/Form';
-import { setDefaultValue } from '../../redux/reducers';
+import { setDefaultValue, signUp } from '../../redux/reducers';
 
-const SignInPage = () => {
+const SignUpPage = () => {
   const { inputs, isAuth } = useSelector((state) => {
     return {
-      inputs: state.signinPageForm,
+      inputs: state.signupPageForm,
       isAuth: state.auth.isAuth,
     };
   });
 
   const dispatch = useDispatch();
   const onUnmount = (watchAllFields) => {
-    dispatch(setDefaultValue('signinPageForm', watchAllFields));
+    dispatch(setDefaultValue('signupPageForm', watchAllFields, 'Sing Up succes', false));
   };
   if (isAuth) {
     return <Redirect to="/change" />;
   }
+  const onSubmit = ({ email, password }) => {
+    dispatch(signUp(email, password, 'Sign Up succes', false));
+  };
   return (
     <>
-      <h2 className="title">Sign in</h2>
-      <Form onUnmount={onUnmount} inputs={inputs} />
+      <h2 className="title">Sign up</h2>
+      <Form onSubmit={onSubmit} onUnmount={onUnmount} inputs={inputs} />
     </>
   );
 };
 
-export default memo(SignInPage);
+export default memo(SignUpPage);
