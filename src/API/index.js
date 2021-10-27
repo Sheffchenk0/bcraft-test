@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:3000/db.json',
+  baseURL: 'https://sheffchenk0.github.io/bcraft-test/db.json',
 });
 
 export const API = {

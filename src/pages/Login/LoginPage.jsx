@@ -20,7 +20,7 @@ const Loginpage = () => {
   };
   return (
     <>
-      {(isAuth && <Redirect to="/change" />) || (
+      {(isAuth && <Redirect to="/bcraft-test/change" />) || (
         <div>
           <div className="title">Log in</div>
           <Form onSubmit={onSubmit} onUnmount={onUnmount} inputs={inputs} />

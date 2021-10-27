@@ -8,7 +8,7 @@ const Logoutpage = () => {
     dispatch(setAuth(false));
     dispatch(addNotification('Log out done', false));
   }, [dispatch]);
-  return <Redirect to="/" />;
+  return <Redirect to="/bcraft-test/" />;
 };
 
 export default Logoutpage;

@@ -9,9 +9,7 @@ const Header = () => {
     isAuth: state.auth.isAuth,
   }));
   pages = pages.map((el) => {
-    if (el.auth === isAuth) {
-      return el;
-    }
+    return el;
   });
   return (
     <div className="header">

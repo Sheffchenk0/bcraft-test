@@ -26,11 +26,11 @@ const App = () => {
         <div className="page">
           <Suspense fallback="loading">
             <Switch>
-              <Route path="/login" render={() => <LoginPage />} />
-              <Route path="/signup" render={() => <SignUpPage />} />
-              <Route path="/change" render={() => <ChangePasswordPage />} />
-              <Route path="/logout" render={() => <Logoutpage />} />
-              <Route path="/" render={() => <Redirect to="/login" />} />
+              <Route path="/bcraft-test/login" render={() => <LoginPage />} />
+              <Route path="/bcraft-test/signup" render={() => <SignUpPage />} />
+              <Route path="/bcraft-test/change" render={() => <ChangePasswordPage />} />
+              <Route path="/bcraft-test/logout" render={() => <Logoutpage />} />
+              <Route path="/bcraft-test/" render={() => <Redirect to="/bcraft-test/login" />} />
             </Switch>
           </Suspense>
           <Notification show={notification?.message && true} isError={notification?.isError}>

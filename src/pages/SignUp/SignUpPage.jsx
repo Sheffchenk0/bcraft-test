@@ -18,7 +18,7 @@ const SignUpPage = () => {
     dispatch(setDefaultValue('signupPageForm', watchAllFields, 'Sing Up succes', false));
   };
   if (isAuth) {
-    return <Redirect to="/change" />;
+    return <Redirect to="/bcraft-test/change" />;
   }
   const onSubmit = ({ email, password }) => {
     dispatch(signUp(email, password, 'Sign Up succes', false));

@@ -26,7 +26,7 @@ const Changepasswordpage = () => {
     }
   };
   if (!isAuth) {
-    return <Redirect to="/login" />;
+    return <Redirect to="/bcraft-test/login" />;
   }
   return (
     <>
