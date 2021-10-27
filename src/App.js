@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { lazy, Suspense, useState } from 'react';
+import { Redirect, Route, Switch } from 'react-router';
+import Header from './Components/Header/Header';
+import './pages/InputPages.css';
+import Logoutpage from './pages/LogOut/LogOutPage';
 
-function App() {
+const LoginPage = lazy(() => import('./pages/Login/LoginPage'));
+const SignInPage = lazy(() => import('./pages/SignIn/SignInPage'));
+const ChangePasswordPage = lazy(() => import('./pages/ChangePassword/ChangePasswordPage'));
+
+const App = () => {
+  const [menuActive, setMenuActive] = useState(false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div className="container">
+        <Header />
+        <div className="page">
+          <Suspense fallback="loading">
+            <Switch>
+              <Route path="/login" render={() => <LoginPage />} />
+              <Route path="/signin" render={() => <SignInPage />} />
+              <Route path="/change" render={() => <ChangePasswordPage />} />
+              <Route path="/logout" render={() => <Logoutpage />} />
+              <Route path="/" render={() => <Redirect to="/login" />} />
+            </Switch>
+          </Suspense>
+        </div>
+      </div>
+    </>
   );
-}
+};
 
 export default App;
