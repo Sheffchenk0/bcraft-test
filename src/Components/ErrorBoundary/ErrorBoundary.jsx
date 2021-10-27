@@ -12,7 +12,7 @@ class ErrorBoundary extends React.Component {
     return this.state.hasError ? (
       <>
         <div>Something went wrong</div>
-        <a href="/">Home Page</a>
+        <a href="'/bcraft-test/">Home Page</a>
       </>
     ) : (
       this.props.children
