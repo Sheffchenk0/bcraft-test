@@ -15,6 +15,7 @@ const Menu = ({ header, items, active, setMenuActive }) => {
         <div className="menu__header">{header}</div>
         <ul>
           {items.map((item, index) => {
+            console.log(item);
             return (
               <li key={index}>
                 <Link to={item.href}>{item.value}</Link>
